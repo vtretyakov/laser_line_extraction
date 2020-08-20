@@ -26,9 +26,14 @@ void LineExtraction::extractLines(std::vector<Line>& lines)
   filtered_indices_ = c_data_.indices;
   lines_.clear();
 
+  std::cout<<"1 . this is the size of lines_  :"<<lines_.size()<<"\n";
+
   // Filter indices
   filterClosePoints();
   filterOutlierPoints();
+
+  std::cout<<"2 . this is the size of lines_  :"<<lines_.size()<<"\n";
+
 
   // Return no lines if not enough points left
   if (filtered_indices_.size() <= std::max(params_.min_line_points, static_cast<unsigned int>(3)))
@@ -39,6 +44,7 @@ void LineExtraction::extractLines(std::vector<Line>& lines)
   // Split indices into lines and filter out short and sparse lines
   split(filtered_indices_);
   filterLines();
+  std::cout<<"3 . this is the size of lines_  :"<<lines_.size()<<"\n";
 
   // Fit each line using least squares and merge colinear lines
   for (std::vector<Line>::iterator it = lines_.begin(); it != lines_.end(); ++it)
@@ -46,6 +52,9 @@ void LineExtraction::extractLines(std::vector<Line>& lines)
     it->leastSqFit();
   }
   
+  std::cout<<"4 . this is the size of lines_  :"<<lines_.size()<<"\n";
+
+
   // If there is more than one line, check if lines should be merged based on the merging criteria
   if (lines_.size() > 1)
   {
@@ -53,6 +62,8 @@ void LineExtraction::extractLines(std::vector<Line>& lines)
   }
 
   lines = lines_;
+  std::cout<<"5 . this is the size of lines_  :"<<lines_.size()<<"\n";
+
 }
 
 ///////////////////////////////////////////////////////////////////////////////
